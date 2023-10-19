@@ -14,7 +14,8 @@ module.exports = {
   ],
   packagerConfig: {
     asar: true,
-    icon: 'src/assets/icon'
+    icon: 'src/assets/icon',
+    executableName: "percy"
   },
   rebuildConfig: {},
   makers: [
@@ -27,7 +28,7 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin', 'linux'],
+      platforms: ['darwin', 'linux','win32'],
     },
     {
       name: '@electron-forge/maker-deb',
