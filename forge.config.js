@@ -7,14 +7,15 @@ module.exports = {
           owner: 'browserstackce',
           name: 'percy-desktop-app'
         },
-        prerelease: false,
+        prerelease: true,
         draft: true
       }
     }
   ],
   packagerConfig: {
     asar: true,
-    icon: 'src/assets/icon'
+    icon: 'src/assets/icon',
+    executableName: "percy-desktop-app"
   },
   rebuildConfig: {},
   makers: [
@@ -26,8 +27,7 @@ module.exports = {
       },
     },
     {
-      name: '@electron-forge/maker-zip',
-      platforms: ['darwin', 'linux'],
+      name: '@electron-forge/maker-zip'
     },
     {
       name: '@electron-forge/maker-deb',
@@ -35,15 +35,7 @@ module.exports = {
         maintainer: 'BrowserStack Pvt. Ltd.',
         homepage: 'https://browserstack.com/percy'
       },
-    },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {
-        options: {
-          homepage: 'https://browserstack.com/percy'
-        }
-      },
-    },
+    }
   ],
   plugins: [
     {
