@@ -15,7 +15,7 @@ module.exports = {
   packagerConfig: {
     asar: true,
     icon: 'src/assets/icon',
-    executableName: "percy"
+    executableName: "percy-desktop-app"
   },
   rebuildConfig: {},
   makers: [
@@ -35,15 +35,7 @@ module.exports = {
         maintainer: 'BrowserStack Pvt. Ltd.',
         homepage: 'https://browserstack.com/percy'
       },
-    },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {
-        options: {
-          homepage: 'https://browserstack.com/percy'
-        }
-      },
-    },
+    }
   ],
   plugins: [
     {
