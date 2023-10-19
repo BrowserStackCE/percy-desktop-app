@@ -1,5 +1,5 @@
 {
-  "name": "@percy/desktop-app",
+  "name": "percy-desktop-app",
   "version": "0.0.1",
   "main": "dist/src/main.js",
   "author": "BrowserStack Pvt Ltd",
