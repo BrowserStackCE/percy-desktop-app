@@ -6,7 +6,7 @@
   "description": "Desktop Application for Percy",
   "scripts": {
     "prebuild": "rimraf dist/",
-    "build": "./node_modules/.bin/tsc",
+    "build": "tsc",
     "postbuild": "copyfiles -u 1 src/assets/* src/index.html dist/src",
     "dev": "npm run build && npm run start",
     "start": "electron-forge start",
