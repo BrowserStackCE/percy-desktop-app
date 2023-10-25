@@ -23,9 +23,9 @@ interface StartPercyOptions {
 //#endregion
 
 export const CONSTANTS = {
-    binaryDownloadPath: `${app.getAppPath()}/binary.zip`,
-    binaryDir: `${app.getAppPath()}/percy`,
-    binaryExecuablePath: `${app.getAppPath()}/percy/${platform() == 'win32' ? 'percy.exe' : 'percy'}`
+    binaryDownloadPath: `${app.getPath('home')}/percy/binary.zip`,
+    binaryDir: `${app.getPath('home')}/percy`,
+    binaryExecuablePath: `${app.getPath('home')}/percy/${platform() == 'win32' ? 'percy.exe' : 'percy'}`
 }
 
 export function getLatestCLIVersion() {
@@ -55,6 +55,9 @@ export async function DownloadExecutable(cb?: (progress: number) => void) {
     return fetch(downloadPath).then(async (res) => {
         return new Promise(async (resolve, reject) => {
             const contentLength = +res.headers.get('Content-Length');
+            if (!existsSync(CONSTANTS.binaryDir)) {
+                mkdirSync(CONSTANTS.binaryDir, { recursive: true })
+            }
             const writeStream = createWriteStream(CONSTANTS.binaryDownloadPath)
             for await (const chunk of res.body) {
                 writeStream.write(chunk)
@@ -94,7 +97,7 @@ export function IsBinaryDownloaded() {
 export function StartPercy(config: z.infer<typeof PercyConfig>, options: StartPercyOptions = {}) {
     return new Promise<string>((resolve, reject) => {
         const { port, ...boolArgs } = options
-        let stdoutlines:string[] = []
+        let stdoutlines: string[] = []
         writeFileSync(`${CONSTANTS.binaryDir}/.percy.json`, JSON.stringify(config))
         const args = ['exec:start']
         if (port) {
@@ -106,6 +109,7 @@ export function StartPercy(config: z.infer<typeof PercyConfig>, options: StartPe
             }
         }
         execFile(CONSTANTS.binaryExecuablePath, args, {
+            cwd:CONSTANTS.binaryDir,
             env: {
                 "PERCY_TOKEN": config.percy.token
             }
@@ -113,13 +117,13 @@ export function StartPercy(config: z.infer<typeof PercyConfig>, options: StartPe
             if (errr) {
                 return reject(errr)
             }
-            if(stderr){
+            if (stderr) {
                 return reject(errr)
             }
-        }).stdout.on('data',(chunk)=>{
+        }).stdout.on('data', (chunk) => {
             const lines = chunk.split('\n')
             stdoutlines = stdoutlines.concat(lines)
-            if(lines.some((l)=>String(l).includes("Percy has started"))){
+            if (lines.some((l) => String(l).includes("Percy has started"))) {
                 resolve(null)
             }
         })
@@ -143,13 +147,18 @@ export function StopPercy() {
 }
 
 export async function RunPercy(config: z.infer<typeof PercyConfig>, options: StartPercyOptions = {}) {
-    if (!IsBinaryDownloaded()) {
-        await DownloadExecutable()
-        await new Promise((resolve, reject) => {
-            setTimeout(() => {
-                UnZipExecutable().then(resolve).catch(reject)
-            }, 500)
-        })
+    try {
+        if (!IsBinaryDownloaded()) {
+            await DownloadExecutable()
+            await new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    UnZipExecutable().then(resolve).catch(reject)
+                }, 500)
+            })
+        }
+        await StartPercy(config, options)
+    } catch (err) {
+        console.log(err)
+        throw err
     }
-    await StartPercy(config, options)
 }
