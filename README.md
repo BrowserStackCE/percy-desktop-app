@@ -42,7 +42,7 @@ The app will close, and you can re-launch it at any time by double-clicking the 
 
 ## Additional Information
 
-For more detailed information and documentation regarding Percy, please visit our official website or refer to the documentation on our repository. If you encounter any issues or have questions, don't hesitate to reach out to our support team or community for assistance.
+For more detailed information and documentation regarding Percy, please visit our official website or refer to the documentation on our repository. If you encounter any issues or have questions, don't hesitate to reach out to our community for assistance.
 
 **Official Percy Website**: https://percy.io
 
