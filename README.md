@@ -40,6 +40,13 @@ To quit the Percy Desktop App, follow these steps:
 
 The app will close, and you can re-launch it at any time by double-clicking the executable file.
 
+## Troubleshooting Errors
+
+If you encounter the error while launching the Percy Desktop app as shown below in the snippet. Please check if there are no other instances of Percy running on your system. If so make sure to close those instances and restart the desktop app.
+<p align="center">
+  <img width="831" alt="error" src="https://github.com/BrowserStackCE/percy-desktop-app/assets/112229060/62e7b95b-4568-4454-bbe1-cd6db104c205">
+</p>
+
 ## Additional Information
 
 For more detailed information and documentation regarding Percy, please visit our official website or refer to the documentation on our repository. If you encounter any issues or have questions, don't hesitate to reach out to our community for assistance.
