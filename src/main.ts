@@ -5,15 +5,17 @@ import { join } from 'path'
 import './server'
 import { StartExpressServer } from './server';
 import { version } from '../package.json'
-
+import { platform } from 'os'
 // require('update-electron-app')({
 //     repo: 'browserstackce/percy-desktop-app',
 //     updateInterval: '1 hour'
 // })
 const trayIconPath = join(__dirname, 'assets', 'tray.png');
 const iconPath = join(__dirname, 'assets', 'icon.png')
-app.dock.setIcon(iconPath)
-app.dock.hide()
+if (platform() == 'darwin') {
+    app.dock.setIcon(iconPath)
+    app.dock.hide()
+}
 app.on('ready', () => {
     StartExpressServer()
     const tray = new Tray(trayIconPath);
