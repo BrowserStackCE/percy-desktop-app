@@ -16,13 +16,13 @@ Follow these simple steps to install the Percy Desktop App on your system:
 
 - **Unzip the File**: After downloading, unzip the compressed file to extract the Percy Desktop App.
 
-- **Open the App**: Once the app is extracted, simply open it by double-clicking the executable file. The app should launch.
+- **Open the App**: After extracting the app, you can easily open it. If you're using a Mac, simply right-click and choose "Open." For other operating systems, just double-click the executable file, and the application will start.
 
 ## Usage
 
 The Percy Desktop App is easy to use and requires minimal setup. After installation, follow these steps:
 
-- **Launch the App**: Double-click the app icon to start it. The app will run in the background.
+- **Launch the App**: If Mac user do a Right-click and select Open, for any other user Double-click the app icon to start it. The app will run in the background.
 
 - **Use Percy Chrome Extension**: Make sure you have the Percy Chrome Extension installed in your Chrome browser. The extension is designed to simplify visual testing and regression testing for your web applications.
 
