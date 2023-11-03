@@ -2,7 +2,7 @@ import * as express from 'express'
 import { PercyConfig } from './schemas';
 import { RunPercy } from './utils';
 import {createServer} from 'http';
-const port = 64360
+const port = 3778
 
 export function StartExpressServer() {
     const app = express()
