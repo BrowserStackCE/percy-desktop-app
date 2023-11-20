@@ -109,9 +109,10 @@ export function StartPercy(config: z.infer<typeof PercyConfig>, options: StartPe
             }
         }
         execFile(CONSTANTS.binaryExecuablePath, args, {
-            cwd:CONSTANTS.binaryDir,
+            cwd: CONSTANTS.binaryDir,
             env: {
-                "PERCY_TOKEN": config.percy.token
+                "PERCY_TOKEN": config.percy.token,
+                "PERCY_BRANCH": "percy-web-extension"
             }
         }, (errr, stdout, stderr) => {
             if (errr) {
