@@ -13,12 +13,12 @@ export const DiscoveryOptions = z.object({
     "device-pixel-ratio": z.string().optional().transform((v) => Number(v)),
     "user-agent": z.string().optional(),
     "network-idle-timeout": z.number().optional(),
-    "concurrency": z.number().optional()
+    "concurrency": z.number().optional().transform((v)=>Number(v))
 })
 
 export const SnapshotOptions = z.object({
-    "widths": z.array(z.number().or(z.string())).max(10).default([375, 1280]),
-    "min-height": z.string().or(z.number()).default("1024"),
+    "widths": z.array(z.number().or(z.string())).max(10).default([375, 1280]).transform((v)=>v.map((i)=>Number(i))),
+    "min-height": z.string().or(z.number()).default("1024").transform((v)=>Number(v)),
     "percy-css": z.string().optional(),
     "scope": z.string().optional(),
     "enable-javascript": z.boolean().default(false)
