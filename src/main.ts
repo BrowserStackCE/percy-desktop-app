@@ -6,6 +6,7 @@ import './server'
 import { StartExpressServer } from './server';
 import { version } from '../package.json'
 import { platform } from 'os'
+import CliDownloader from "./windows/cli-downloader/cli-downloader";
 // require('update-electron-app')({
 //     repo: 'browserstackce/percy-desktop-app',
 //     updateInterval: '1 hour'
@@ -25,4 +26,6 @@ app.on('ready', () => {
         { label: "Quit", type: 'normal', click: () => app.quit() }
     ]);
     tray.setContextMenu(contextMenu);
+    CliDownloader.startDownload()
+
 })
