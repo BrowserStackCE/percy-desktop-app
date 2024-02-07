@@ -3,14 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Downloading Percy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #progressContainer {
+            border-radius: 5px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #downloadProgress {
+            width: 100%;
+            margin-bottom: 10px;
+            color: #f1f1f1;            
+        }
+
+        #progressLabel {
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
     <script type="application/javascript" src="cli-downloader.render.js"></script>
 </head>
 <body>
-    <div style="background: beige; border-radius: 5px">
-        <progress  value="25" ></progress>
-    </div>
-    <div>
-        <label>Downloading Percy...</label>
+    <div id="progressContainer">
+        <progress id="downloadProgress" value="0" max="100"></progress>
+        <label id="progressLabel">Downloading Percy...</label>
+        
     </div>
 </body>
 </html>
