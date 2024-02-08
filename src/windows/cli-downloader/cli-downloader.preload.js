@@ -1,5 +1,7 @@
-const {contextBridge, ipcRenderer} = require('electron')
+// cli-downloader.preload.js
 
-contextBridge.exposeInMainWorld('api',{
-    'onProgressChange':(callback)=>ipcRenderer.on('progress',(_event,value)=>callback(value))
-})
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('api', {
+  'onProgressChange': (callback) => ipcRenderer.on('download-progress', (_, value) => callback(value))
+});
