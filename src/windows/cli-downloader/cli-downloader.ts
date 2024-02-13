@@ -5,7 +5,7 @@ import { load } from "cheerio";
 import { platform } from "os";
 import { createWriteStream, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { loadAsync } from "jszip";
-import { execSync,execFile, ExecFileException } from "child_process";
+import { execSync, execFile, ExecFileException } from "child_process";
 
 export const CONSTANTS = {
     binaryDownloadPath: `${app.getPath('home')}/percy/binary.zip`,
@@ -15,29 +15,23 @@ export const CONSTANTS = {
 export default class CliDownloader {
     static window: BrowserWindow
     static async startDownload() {
-
-        if (this.IsBinaryDownloaded()) {
-            console.log("downloaded")
-            const installedVersion = await this.getInstalledVersion();
-            console.log("installed version",installedVersion)
-            const latestVersion = await this.getCurrentVersion();
-            console.log("current version", latestVersion)
-            if (this.isVersionOutdated(installedVersion, latestVersion)) {
-                await this.prepareWindow();
-                await this.DownloadExecutable();
-            } else {
-                console.log('CLI is already installed, and it is up-to-date.');
-            }
-        }
-        else {
-            console.log("not downloaded")
-
+        if (await this.shouldDownload()) {
             await this.prepareWindow();
-            await this.DownloadExecutable();
+            await this.DownloadExecutable((progress) => {
+                console.log(progress)
+                this.window.webContents.send('download-progress', progress);
+            });
+            await new Promise((res, rej) => {
+                setTimeout(() => {
+                    this.window.webContents.send('unzip');
+                    this.UnZipExecutable().then(res).catch(rej)
+                }, 500)
+            })
+            this.window.close()
         }
     }
 
-    private static getInstalledVersion(){
+    private static getInstalledVersion() {
         return new Promise((resolve, reject) => {
             execFile(CONSTANTS.binaryExecutablePath, ['--version'], (error, stdout, stderr) => {
                 if (error) {
@@ -51,8 +45,14 @@ export default class CliDownloader {
         });
     }
 
-    private static isVersionOutdated(installedVersion, latestVersion) {
-        return installedVersion !== latestVersion;
+    private static async isVersionOutdated() {
+        let currentVersion = await this.getCurrentVersion()
+        let installedVersion = await this.getInstalledVersion()
+        return installedVersion !== currentVersion.replace('v','').trim();
+    }
+
+    private static async shouldDownload() {
+        return !this.IsBinaryDownloaded() || await this.isVersionOutdated()
     }
 
     private static prepareWindow() {
@@ -72,8 +72,6 @@ export default class CliDownloader {
         })
     }
 
-    //is update available
-    //if so install
     static async getCurrentVersion() {
         return fetch('https://github.com/percy/cli/releases').then(async (res) => {
             const html = await res.text()
@@ -96,8 +94,9 @@ export default class CliDownloader {
             throw new Error("Invalid Plafrom")
         }
         const downloadPath = `https://github.com/percy/cli/releases/download/${version}/${downloadEndpoint}`
-
+        console.log(downloadPath)
         return fetch(downloadPath).then(async (res) => {
+            console.log(res.status)
             return new Promise(async (resolve, reject) => {
                 const contentLength = +res.headers.get('Content-Length');
                 let downloadedBytes = 0;
@@ -110,15 +109,12 @@ export default class CliDownloader {
                     downloadedBytes += chunk.length;
                     writeStream.write(chunk)
                     cb?.(downloadedBytes / contentLength * 100)
-                    this.window.webContents.send('download-progress', downloadedBytes / contentLength * 100);
-
                 }
                 writeStream.close((err) => {
                     if (err) {
                         reject(err)
                     } else {
                         resolve(null)
-                        this.window.close()
                     }
                 })
             })

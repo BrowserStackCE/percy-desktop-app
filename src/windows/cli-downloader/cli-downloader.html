@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Downloading Percy</title>
@@ -15,32 +16,34 @@
             height: 100vh;
         }
 
-        #progressContainer {
-            border-radius: 5px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #downloadProgress {
-            width: 100%;
-            margin-bottom: 10px;
-            color: #f1f1f1;            
-        }
-
         #progressLabel {
             font-size: 16px;
             text-align: center;
+            margin-top: 1rem;
+        }
+
+        #progressContainer {
+            width: 90%;
+            height: 10px;
+            background-color: transparent;
+            border: 1px solid rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #progressValue {
+            height: 100%;
+            background-color: #8245a5d9;
         }
     </style>
     <script type="application/javascript" src="cli-downloader.render.js"></script>
 </head>
+
 <body>
     <div id="progressContainer">
-        <progress id="downloadProgress" value="0" max="100"></progress>
-        <label id="progressLabel">Downloading Percy...</label>
-        
+        <div id="progressValue" style="width:0%"></div>
     </div>
+    <div id="progressLabel">Downloading Percy...</div>
 </body>
+
 </html>
