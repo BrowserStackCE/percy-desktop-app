@@ -27,7 +27,7 @@ export default class CliDownloader {
                     this.UnZipExecutable().then(res).catch(rej)
                 }, 500)
             })
-            this.window.close()
+            this.window.hide()
         }
     }
 

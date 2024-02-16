@@ -17,8 +17,7 @@ if (platform() == 'darwin') {
     app.dock.setIcon(iconPath)
     app.dock.hide()
 }
-app.on('ready', () => {
-    StartExpressServer()
+app.on('ready', async () => {
     const tray = new Tray(trayIconPath);
     Menu.setApplicationMenu(null)
     const contextMenu = Menu.buildFromTemplate([
@@ -26,6 +25,6 @@ app.on('ready', () => {
         { label: "Quit", type: 'normal', click: () => app.quit() }
     ]);
     tray.setContextMenu(contextMenu);
-    CliDownloader.startDownload()
-
+    await CliDownloader.startDownload()
+    StartExpressServer()
 })

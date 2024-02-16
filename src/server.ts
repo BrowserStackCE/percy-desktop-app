@@ -24,5 +24,7 @@ export function StartExpressServer() {
     })
 
     const server = createServer(app)
-    return server.listen(port,'127.0.0.1')
+    return server.listen(port,'127.0.0.1',()=>{
+        console.log("Percy Desktop App Server Running...")
+    })
 }
