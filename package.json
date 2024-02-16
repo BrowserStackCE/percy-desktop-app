@@ -1,6 +1,6 @@
 {
   "name": "percy-desktop-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/src/main.js",
   "author": "BrowserStack Pvt Ltd",
   "description": "Desktop Application for Percy",
