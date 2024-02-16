@@ -63,10 +63,10 @@ export default class CliDownloader {
                 resizable: false,
                 title: "Downloading Percy",
                 webPreferences: {
-                    preload: path.resolve('src/windows/cli-downloader/cli-downloader.preload.js')
+                    preload: path.join(app.getAppPath(),'src/windows/cli-downloader/cli-downloader.preload.js')
                 }
             }).on('show', () => {
-                this.window.loadFile(path.resolve("src/windows/cli-downloader/cli-downloader.html"))
+                this.window.loadFile(path.join(app.getAppPath(),"src/windows/cli-downloader/cli-downloader.html"))
                 resolve(null)
             })
         })

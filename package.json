@@ -7,7 +7,7 @@
   "scripts": {
     "prebuild": "rimraf dist/",
     "build": "tsc",
-    "postbuild": "copyfiles -u 1 src/assets/* src/index.html dist/src",
+    "postbuild": "copyfiles -u 1 src/assets/* src/**/*.html dist/src",
     "dev": "npm run build && npm run start",
     "start": "electron-forge start",
     "test": "echo \"Error: no test specified\" && exit 1",
