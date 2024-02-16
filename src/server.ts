@@ -1,7 +1,8 @@
 import * as express from 'express'
-import { PercyConfig } from './schemas';
+import {PercyConfig, PercySnapshot} from './schemas';
 import { RunPercy } from './utils';
 import {createServer} from 'http';
+import {z} from "zod";
 const port = 3778
 
 export function StartExpressServer() {
@@ -15,7 +16,15 @@ export function StartExpressServer() {
         })().catch(next)
 
     })
+    app.post('/percy/create-build',async (req,res)=>{
+        const body = z.object({
+            config:PercyConfig,
+            snapshots: z.array(PercySnapshot)
+        }).parse(req.body)
+    })
 
     const server = createServer(app)
-    return server.listen(port,'127.0.0.1')
+    return server.listen(port,'127.0.0.1',()=>{
+        console.log("Percy Desktop App Server Running...")
+    })
 }

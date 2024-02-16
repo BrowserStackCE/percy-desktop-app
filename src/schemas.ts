@@ -16,6 +16,20 @@ export const DiscoveryOptions = z.object({
     "concurrency": z.number().optional().transform((v)=>Number(v))
 })
 
+export const PercySnapshot = z.object({
+    // required
+    name: z.string(),
+    url: z.string(),
+    domSnapshot: z.string(),
+    // optional
+    environmentInfo: z.array(z.string()).optional(),
+    clientInfo: z.string().optional(),
+    widths: z.array(z.number()).optional(),
+    minHeight: z.number().optional(),
+    enableJavaScript: z.boolean().optional(),
+    requestHeaders: z.record(z.string(),z.string()).optional()
+})
+
 export const SnapshotOptions = z.object({
     "widths": z.array(z.number().or(z.string())).max(10).default([375, 1280]).transform((v)=>v.map((i)=>Number(i))),
     "min-height": z.string().or(z.number()).default("1024").transform((v)=>Number(v)),
@@ -32,3 +46,4 @@ export const PercyConfig = z.object({
     snapshot: SnapshotOptions,
     discovery: DiscoveryOptions
 })
+

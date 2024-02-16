@@ -6,6 +6,7 @@ import './server'
 import { StartExpressServer } from './server';
 import { version } from '../package.json'
 import { platform } from 'os'
+import CliDownloader from "./windows/cli-downloader/cli-downloader";
 // require('update-electron-app')({
 //     repo: 'browserstackce/percy-desktop-app',
 //     updateInterval: '1 hour'
@@ -16,8 +17,7 @@ if (platform() == 'darwin') {
     app.dock.setIcon(iconPath)
     app.dock.hide()
 }
-app.on('ready', () => {
-    StartExpressServer()
+app.on('ready', async () => {
     const tray = new Tray(trayIconPath);
     Menu.setApplicationMenu(null)
     const contextMenu = Menu.buildFromTemplate([
@@ -25,4 +25,6 @@ app.on('ready', () => {
         { label: "Quit", type: 'normal', click: () => app.quit() }
     ]);
     tray.setContextMenu(contextMenu);
+    await CliDownloader.startDownload()
+    StartExpressServer()
 })
