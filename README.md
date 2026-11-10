@@ -1,6 +1,6 @@
 # Percy Desktop App
 
-<img style="object-fit:contain;" src="https://www.svgviewer.dev/static-svgs/14340/percy-icon.svg"  width="150" height="150">   <img style="object-fit:contain;" src="https://d98b8t1nnulk5.cloudfront.net/production/images/layout/logo-header.png?1469004780"  width="450" height="150">
+<img style="object-fit:contain;" src="https://www.svgviewer.dev/static-svgs/14340/percy-icon.svg"  width="200">   <img style="object-fit:contain;" src="https://www.browserstack.com/images/static/header-logo.jpg"  width="450" height="150">
 
 **Percy Desktop App** is an Electron application designed to enable Percy local servers on your system. Percy is an all-in-one visual testing and review platform that helps teams automate their visual QA process, catch visual bugs, and gain insights into UI changes with each commit. Our goal is to provide you and your team with confidence in the visual integrity of your user interface every time you deploy.
 
